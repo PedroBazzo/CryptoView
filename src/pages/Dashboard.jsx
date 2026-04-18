@@ -2,17 +2,37 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ConverterForm from "../components/ConverterForm";
 import ResultCard from "../components/ResultCard";
+import CryptoSelector from "../components/CryptoSelector";
+import Comparison from "../components/Comparison";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [result, setResult] = useState(null);
+  const [crypto, setCrypto] = useState("bitcoin");
+  const [currency, setCurrency] = useState("brl");
 
   return (
     <div>
       <Navbar />
-      <h1>Conversor de Criptomoedas</h1>
+      <h1>Dashboard</h1>
 
-      <ConverterForm setResult={setResult} />
+      <CryptoSelector
+        crypto={crypto}
+        setCrypto={setCrypto}
+        currency={currency}
+        setCurrency={setCurrency}
+      />
+
+      <ConverterForm
+        setResult={setResult}
+        crypto={crypto}
+        currency={currency}
+      />
+
       <ResultCard value={result} />
+
+      <Comparison />
+
     </div>
   );
 }
