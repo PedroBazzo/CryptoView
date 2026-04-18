@@ -1,9 +1,11 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import emailjs from "@emailjs/browser";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -32,7 +34,7 @@ export default function Register() {
       );
 
       alert("Conta criada com sucesso!");
-      window.location.href = "/dashboard";
+      navigate("/");
 
     } catch (err) {
       alert(err.message);
