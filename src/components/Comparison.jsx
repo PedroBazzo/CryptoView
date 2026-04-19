@@ -18,12 +18,14 @@ export default function Comparison() {
         <option value="bitcoin">Bitcoin</option>
         <option value="ethereum">Ethereum</option>
         <option value="dogecoin">Dogecoin</option>
+        <option value="solana">Solana</option>
       </select>
 
       <select onChange={(e) => setCrypto2(e.target.value)}>
         <option value="ethereum">Ethereum</option>
         <option value="bitcoin">Bitcoin</option>
         <option value="dogecoin">Dogecoin</option>
+        <option value="solana">Solana</option>
       </select>
 
       <button onClick={compare}>Comparar</button>

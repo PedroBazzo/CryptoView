@@ -5,6 +5,7 @@ export default function CryptoSelector({ crypto, setCrypto, currency, setCurrenc
         <option value="bitcoin">Bitcoin</option>
         <option value="ethereum">Ethereum</option>
         <option value="dogecoin">Dogecoin</option>
+        <option value="solana">Solana</option>
       </select>
 
       <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
