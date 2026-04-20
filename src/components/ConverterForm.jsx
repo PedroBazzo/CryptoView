@@ -1,21 +1,39 @@
 import { useState } from "react";
 import { getCryptoPrice } from "../services/api/crypto";
 
-export default function ConverterForm({ setResult, crypto, currency }) {
+export default function ConverterForm({ crypto, currency, setResult }) {
   const [amount, setAmount] = useState(1);
 
-  const handleConvert = async () => {
-    const price = await getCryptoPrice(crypto, currency);
-    setResult(price * amount);
-  };
+  async function handleConvert() {
+    try {
+      console.log("Crypto:", crypto);
+      console.log("Currency:", currency);
+
+      const price = await getCryptoPrice(crypto, currency);
+
+      console.log("Preço:", price);
+
+      if (price === undefined || price === null) {
+        alert("Erro ao obter preço");
+        return;
+      }
+
+      setResult(price * amount);
+
+    } catch (err) {
+      console.error(err);
+      alert("Erro na conversão");
+    }
+  }
 
   return (
     <div>
       <input
         type="number"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={(e) => setAmount(Number(e.target.value))}
       />
+
       <button onClick={handleConvert}>Converter</button>
     </div>
   );

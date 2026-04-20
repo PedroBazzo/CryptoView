@@ -42,8 +42,7 @@ export default function Dashboard() {
         setResult={setResult}
       />
 
-      {/* 📊 Resultado */}
-      {result && <ResultCard result={result} />}
+      {result !== null && <ResultCard result={result} />}
 
       {/* ⚔️ Comparador (somente logado) */}
       {user ? (
