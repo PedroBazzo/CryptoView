@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// 📄 páginas
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -9,12 +8,16 @@ import History from "../pages/History";
 import News from "../pages/News";
 import Profile from "../pages/Profile";
 
-// 🔐 auth
 import { getCurrentUser } from "../services/auth";
 
-// 🔒 proteção de rota
 function PrivateRoute({ children }) {
-  return getCurrentUser() ? children : <Navigate to="/login" />;
+  const user = getCurrentUser();
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
 }
 
 export default function AppRoutes() {
@@ -27,30 +30,16 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 🔒 privadas */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
+        {/* 🔓 públicas */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/news" element={<News />} />
 
+        {/* 🔒 privadas */}
         <Route
           path="/history"
           element={
             <PrivateRoute>
               <History />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/news"
-          element={
-            <PrivateRoute>
-              <News />
             </PrivateRoute>
           }
         />
@@ -64,7 +53,7 @@ export default function AppRoutes() {
           }
         />
 
-        {/* ❌ fallback */}
+        {/* fallback */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

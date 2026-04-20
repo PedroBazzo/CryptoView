@@ -13,12 +13,12 @@ export default function Navbar() {
   return (
     <nav style={{ marginBottom: "20px" }}>
       <Link to="/">Home</Link> |{" "}
+      <Link to="/dashboard">Dashboard</Link> |{" "}
+      <Link to="/news">Notícias</Link> |{" "}
 
       {user && (
         <>
-          <Link to="/dashboard">Dashboard</Link> |{" "}
-          <Link to="/history">Histórico</Link> |{" "}
-          <Link to="/news">Notícias</Link> |{" "}
+          <Link to="/history">Histórico</Link> |{" "} 
           <Link to="/profile">Perfil</Link> |{" "}
           <button onClick={handleLogout}>Logout</button>
         </>

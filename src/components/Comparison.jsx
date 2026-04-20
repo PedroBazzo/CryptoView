@@ -7,8 +7,8 @@ export default function Comparison() {
   const [result, setResult] = useState(null);
 
   const compare = async () => {
-    const c1 = await getCryptoPrice(crypto1, "usd");
-    const c2 = await getCryptoPrice(crypto2, "usd");
+    const c1 = await getCryptoPrice(crypto1, "brl");
+    const c2 = await getCryptoPrice(crypto2, "brl");
     setResult({ c1, c2 });
   };
 
