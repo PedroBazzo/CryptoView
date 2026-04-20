@@ -14,10 +14,10 @@ export default function useAuth() {
     if (current) setUser(current);
   }, []);
 
-  function login(email, password) {
-    loginUser(email, password);
-    setUser(getCurrentUser());
-  }
+  function login(identifier, password) {
+  loginUser(identifier, password);
+  setUser(getCurrentUser());
+}
 
   function register(data) {
     registerUser(data);

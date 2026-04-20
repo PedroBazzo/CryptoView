@@ -48,6 +48,7 @@ export default function History() {
         <option value="bitcoin">Bitcoin</option>
         <option value="ethereum">Ethereum</option>
         <option value="dogecoin">Dogecoin</option>
+        <option value="solana">Solana</option>
       </select>
 
       {}
