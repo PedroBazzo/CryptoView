@@ -1,7 +1,7 @@
 export default function ResultCard({ result, currency }) {
   const formattedValue = Number(result).toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4,
   });
 
   return (

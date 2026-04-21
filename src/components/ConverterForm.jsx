@@ -18,7 +18,7 @@ export default function ConverterForm({ crypto, currency, setResult }) {
         return;
       }
 
-      setResult(price * amount);
+      setResult((price * amount).toFixed(4));
 
     } catch (err) {
       console.error(err);

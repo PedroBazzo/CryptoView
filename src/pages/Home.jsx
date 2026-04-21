@@ -58,7 +58,11 @@ export default function Home() {
           <p>
             1 BTC ={" "}
             <strong>
-              {Number(btcPrice).toLocaleString()} BRL
+              {Number(btcPrice).toLocaleString("pt-BR", {
+                minimumFractionDigits: 4,
+                maximumFractionDigits: 4,
+              })}{" "}
+              BRL
             </strong>
           </p>
         ) : (

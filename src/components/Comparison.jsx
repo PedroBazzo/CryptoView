@@ -32,8 +32,15 @@ export default function Comparison() {
 
       {result && (
         <div>
-          <p>{crypto1}: ${result.c1}</p>
-          <p>{crypto2}: ${result.c2}</p>
+          <p>
+            {crypto1}: $
+            {result.c1 ? Number(result.c1).toFixed(4) : "-"}
+          </p>
+
+          <p>
+            {crypto2}: $
+            {result.c2 ? Number(result.c2).toFixed(4) : "-"}
+          </p>
         </div>
       )}
     </div>
