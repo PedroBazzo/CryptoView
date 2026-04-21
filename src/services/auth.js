@@ -45,8 +45,12 @@ export function loginUser(identifier, password) {
 
 export function logoutUser() {
   localStorage.removeItem("currentUser");
+
+  // 🔥 GARANTIA TOTAL (remove qualquer resíduo)
+  localStorage.setItem("currentUser", "");
 }
 
 export function getCurrentUser() {
-  return JSON.parse(localStorage.getItem("currentUser"));
+  const user = localStorage.getItem("currentUser");
+  return user && user !== "undefined" ? JSON.parse(user) : null;
 }

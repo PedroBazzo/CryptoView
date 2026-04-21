@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { getCryptoPrice } from "../services/api/crypto";
 import { getCryptoNews } from "../services/api/news";
 
@@ -7,89 +9,189 @@ export default function Home() {
   const [btcPrice, setBtcPrice] = useState(null);
   const [news, setNews] = useState([]);
 
-  // 🪙 BTC → BRL
   useEffect(() => {
     async function loadPrice() {
       try {
         const price = await getCryptoPrice("bitcoin", "brl");
-        if (price !== undefined && price !== null) {
-          setBtcPrice(price);
-        }
+        setBtcPrice(price);
       } catch (err) {
-        console.error("Erro ao carregar preço:", err);
+        console.error(err);
       }
     }
-
     loadPrice();
   }, []);
 
-  // 📰 Notícias
   useEffect(() => {
     async function loadNews() {
       try {
         const data = await getCryptoNews();
-
-        if (Array.isArray(data)) {
-          setNews(data.slice(0, 3));
-        } else {
-          setNews([]);
-        }
-
+        setNews(Array.isArray(data) ? data.slice(0, 6) : []);
       } catch (err) {
-        console.error("Erro ao carregar notícias:", err);
-        setNews([]);
+        console.error(err);
       }
     }
-
     loadNews();
   }, []);
+
+  const linkStyle = {
+    color: "#60a5fa",
+    textDecoration: "none",
+    fontWeight: "bold",
+  };
 
   return (
     <div>
       <Navbar />
 
-      <h1>CryptoView</h1>
+      <main style={{ padding: "30px" }}>
+        <h1>CryptoView</h1>
 
-      {/* 🪙 PREVIEW CONVERSOR */}
-      <section style={{ marginTop: "20px" }}>
-        <h2>Bitcoin hoje</h2>
+        {/* 🔥 SOBRE + VISÃO GERAL */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "20px",
+            marginTop: "20px",
+          }}
+        >
+          {/* 📌 SOBRE */}
+          <div
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "10px",
+              padding: "20px",
+              textAlign: "left",
+            }}
+          >
+            <h2>Sobre Nós</h2>
+            <p style={{ lineHeight: "1.6" }}>
+              O CryptoView é uma plataforma dedicada à visualização e análise
+              de criptomoedas em tempo real. Aqui você pode acompanhar preços,
+              comparar diferentes ativos digitais e se manter atualizado com as
+              principais notícias do mercado cripto. Nosso objetivo é fornecer
+              uma experiência simples, rápida e acessível para usuários que
+              desejam entender melhor o universo das criptomoedas.
+            </p>
+          </div>
 
-        {btcPrice !== null ? (
-          <p>
-            1 BTC ={" "}
-            <strong>
-              {Number(btcPrice).toLocaleString("pt-BR", {
-                minimumFractionDigits: 4,
-                maximumFractionDigits: 4,
-              })}{" "}
-              BRL
-            </strong>
-          </p>
-        ) : (
-          <p>Carregando preço...</p>
-        )}
-      </section>
+          {/* 💰 VISÃO GERAL */}
+          <div
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "10px",
+              padding: "20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <h2>Visão Geral do Mercado</h2>
 
-      {/* 📰 PREVIEW NOTÍCIAS */}
-      <section style={{ marginTop: "30px" }}>
-        <h2>Últimas Notícias</h2>
+            <p style={{ marginTop: "10px" }}>
+              Bitcoin hoje:
+            </p>
 
-        {news.length > 0 ? (
-          news.map((item, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noreferrer"
+            {btcPrice ? (
+              <p style={{ fontSize: "28px", fontWeight: "bold" }}>
+                {Number(btcPrice).toLocaleString("pt-BR", {
+                  minimumFractionDigits: 4,
+                  maximumFractionDigits: 4,
+                })}{" "}
+                BRL
+              </p>
+            ) : (
+              <p>Carregando...</p>
+            )}
+
+            {/* 🔥 BOTÃO NO CANTO INFERIOR DIREITO */}
+            <Link
+              to="/dashboard"
+              style={{
+                marginTop: "auto",
+                alignSelf: "flex-end",
+                color: "#60a5fa",
+                textDecoration: "none",
+                fontWeight: "bold",
+              }}
+            >
+              Ver Dashboard →
+            </Link>
+          </div>
+        </div>
+
+        {/* 📰 NOTÍCIAS + LINK */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "40px",
+          }}
+        >
+          <h2>Últimas Notícias</h2>
+
+          <Link to="/news" style={linkStyle}>
+            Ver todas as notícias →
+          </Link>
+        </div>
+
+        {/* 📰 GRID 3x2 */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "20px",
+            marginTop: "10px",
+          }}
+        >
+          {news.map((item, index) => {
+            const image =
+              item.thumbnail ||
+              item.enclosure?.link ||
+              "https://via.placeholder.com/300";
+
+            return (
+              <div
+                key={index}
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                }}
               >
-                {item.title}
-              </a>
-            </div>
-          ))
-        ) : (
-          <p>Nenhuma notícia disponível</p>
-        )}
-      </section>
+                <img
+                  src={image}
+                  alt="news"
+                  style={{
+                    width: "100%",
+                    height: "160px",
+                    objectFit: "cover",
+                  }}
+                />
+
+                <div style={{ padding: "15px" }}>
+                  <h3 style={{ fontSize: "16px" }}>{item.title}</h3>
+
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: "inline-block",
+                      marginTop: "10px",
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Ler mais →
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }

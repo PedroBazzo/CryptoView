@@ -9,15 +9,26 @@ import {
 export default function useAuth() {
   const [user, setUser] = useState(null);
 
+  // 🔥 SEMPRE sincroniza com localStorage
   useEffect(() => {
-    const current = getCurrentUser();
-    if (current) setUser(current);
+    function syncUser() {
+      setUser(getCurrentUser());
+    }
+
+    syncUser();
+
+    // escuta mudanças no localStorage
+    window.addEventListener("storage", syncUser);
+
+    return () => {
+      window.removeEventListener("storage", syncUser);
+    };
   }, []);
 
   function login(identifier, password) {
-  loginUser(identifier, password);
-  setUser(getCurrentUser());
-}
+    loginUser(identifier, password);
+    setUser(getCurrentUser());
+  }
 
   function register(data) {
     registerUser(data);
@@ -25,9 +36,12 @@ export default function useAuth() {
   }
 
   function logout() {
-    logoutUser();
-    setUser(null);
-  }
+   logoutUser();
+   setUser(null);
+
+   // 🔥 força atualização global
+   window.dispatchEvent(new Event("storage"));
+ }
 
   return {
     user,
