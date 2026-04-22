@@ -6,7 +6,6 @@ import logo from "../assets/logo.png";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
-
   const [dark, setDark] = useState(false);
 
   function toggleDark() {
@@ -32,10 +31,10 @@ export default function Navbar() {
   return (
     <header
       style={{
-        position: "relative", // 🔥 IMPORTANTE
+        position: "relative",
         display: "flex",
         justifyContent: "space-between",
-        padding: "15px 30px",
+        padding: "15px clamp(15px, 5vw, 30px)",
         alignItems: "center",
         background: "#1e3a8a",
         color: "#fff",
@@ -50,6 +49,7 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           gap: "8px",
+          zIndex: 2,
         }}
       >
         <img
@@ -64,16 +64,8 @@ export default function Navbar() {
         CryptoView
       </Link>
 
-      {/* 🔥 NAV CENTRALIZADO */}
-      <nav
-        style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          gap: "20px",
-        }}
-      >
+      {/* 🔥 NAV */}
+      <nav className="nav-links">
         <Link to="/" style={linkStyle}>Home</Link>
         <Link to="/dashboard" style={linkStyle}>Dashboard</Link>
         <Link to="/news" style={linkStyle}>News</Link>
@@ -85,15 +77,15 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* DROPDOWN */}
-      <div style={{ position: "relative" }}>
+      {/* ☰ MENU */}
+      <div style={{ position: "relative", zIndex: 2 }}>
         <button
           onClick={() => setOpen((prev) => !prev)}
           style={{
             background: "none",
             border: "none",
             color: "#fff",
-            fontSize: "22px",
+            fontSize: "24px",
             cursor: "pointer",
           }}
         >
@@ -105,42 +97,41 @@ export default function Navbar() {
             style={{
               position: "absolute",
               right: 0,
-              top: "40px",
+              top: "50px",
               background: "#1e40af",
-              padding: "12px",
-              borderRadius: "8px",
-              minWidth: "160px",
+              padding: "15px",
+              borderRadius: "10px",
+              width: "220px",
+              boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
             }}
           >
+            {/* NAV MOBILE */}
+            <div className="mobile-nav">
+              <Link to="/" onClick={() => setOpen(false)} style={linkStyle}>Home</Link>
+              <Link to="/dashboard" onClick={() => setOpen(false)} style={linkStyle}>Dashboard</Link>
+              <Link to="/news" onClick={() => setOpen(false)} style={linkStyle}>News</Link>
+
+              {user && (
+                <Link to="/history" onClick={() => setOpen(false)} style={linkStyle}>
+                  Histórico
+                </Link>
+              )}
+
+              <hr />
+            </div>
+
             {!user ? (
               <>
-                <Link to="/login" style={linkStyle}>Login</Link>
-                <br />
+                <Link to="/login" style={linkStyle}>Login</Link><br />
                 <Link to="/register" style={linkStyle}>Criar Conta</Link>
               </>
             ) : (
               <>
-                <Link
-                  to="/profile"
-                  style={{
-                    ...linkStyle,
-                    fontWeight: "bold",
-                    display: "block",
-                    marginBottom: "10px",
-                    textAlign: "center",
-                  }}
-                >
+                <Link to="/profile" style={{ ...linkStyle, fontWeight: "bold", display: "block", textAlign: "center" }}>
                   {user?.username}
                 </Link>
 
-                <button
-                  onClick={logout}
-                  style={{
-                    width: "100%",
-                    marginBottom: "10px",
-                    cursor: "pointer",
-                  }}
-                >
+                <button onClick={logout} style={{ width: "100%", marginTop: "10px" }}>
                   Logout
                 </button>
               </>
@@ -148,14 +139,7 @@ export default function Navbar() {
 
             <hr />
 
-            <button
-              onClick={toggleDark}
-              style={{
-                marginTop: "10px",
-                width: "100%",
-                cursor: "pointer",
-              }}
-            >
+            <button onClick={toggleDark} style={{ width: "100%" }}>
               {dark ? "Modo Claro" : "Modo Escuro"}
             </button>
           </div>

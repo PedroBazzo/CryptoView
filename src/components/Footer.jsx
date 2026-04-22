@@ -40,11 +40,19 @@ export default function Footer() {
         textAlign: "center",
         background: "#1e3a8a",
         color: "#fff",
+        width: "100%", // 🔥 garante largura total
+        boxSizing: "border-box", // 🔥 evita overflow
       }}
     >
       <p>© 2026 CryptoView</p>
 
-      <p style={{ marginTop: "10px" }}>
+      <p
+        style={{
+          marginTop: "10px",
+          maxWidth: "600px", // 🔥 evita texto estourar
+          marginInline: "auto",
+        }}
+      >
         Plataforma de acompanhamento e análise de criptomoedas em tempo real.
       </p>
 
@@ -54,8 +62,8 @@ export default function Footer() {
           marginTop: "15px",
           display: "flex",
           justifyContent: "center",
-          gap: "20px",
-          flexWrap: "wrap",
+          gap: "15px",
+          flexWrap: "wrap", // 🔥 quebra linha automático
         }}
       >
         <Link to="/" style={linkStyle}>Home</Link>
@@ -67,11 +75,26 @@ export default function Footer() {
         )}
       </div>
 
-      <p style={{ marginTop: "15px", fontSize: "14px" }}>
+      <p
+        style={{
+          marginTop: "15px",
+          fontSize: "14px",
+          maxWidth: "600px",
+          marginInline: "auto",
+        }}
+      >
         Dados fornecidos por APIs públicas • Atualização em tempo real
       </p>
 
-      <p style={{ marginTop: "10px", fontSize: "12px", opacity: 0.8 }}>
+      <p
+        style={{
+          marginTop: "10px",
+          fontSize: "12px",
+          opacity: 0.8,
+          maxWidth: "600px",
+          marginInline: "auto",
+        }}
+      >
         As informações fornecidas não constituem aconselhamento financeiro.
       </p>
     </footer>

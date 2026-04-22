@@ -40,56 +40,42 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
+    >
       <Navbar />
 
-      <main style={{ padding: "30px" }}>
+      <main
+        style={{
+          padding: "20px",
+          flex: 1,
+          width: "100%",
+        }}
+      >
         <h1>CryptoView</h1>
 
         {/* 🔥 SOBRE + VISÃO GERAL */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "20px",
-            marginTop: "20px",
-          }}
-        >
-          {/* 📌 SOBRE */}
-          <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "10px",
-              padding: "20px",
-              textAlign: "left",
-            }}
-          >
+        <div className="home-top">
+          {/* SOBRE */}
+          <div className="card">
             <h2>Sobre Nós</h2>
             <p style={{ lineHeight: "1.6" }}>
               O CryptoView é uma plataforma dedicada à visualização e análise
               de criptomoedas em tempo real. Aqui você pode acompanhar preços,
               comparar diferentes ativos digitais e se manter atualizado com as
-              principais notícias do mercado cripto. Nosso objetivo é fornecer
-              uma experiência simples, rápida e acessível para usuários que
-              desejam entender melhor o universo das criptomoedas.
+              principais notícias do mercado cripto.
             </p>
           </div>
 
-          {/* 💰 VISÃO GERAL */}
-          <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "10px",
-              padding: "20px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          {/* VISÃO GERAL */}
+          <div className="card">
             <h2>Visão Geral do Mercado</h2>
 
-            <p style={{ marginTop: "10px" }}>
-              Bitcoin hoje:
-            </p>
+            <p style={{ marginTop: "10px" }}>Bitcoin hoje:</p>
 
             {btcPrice ? (
               <p style={{ fontSize: "28px", fontWeight: "bold" }}>
@@ -103,47 +89,23 @@ export default function Home() {
               <p>Carregando...</p>
             )}
 
-            {/* 🔥 BOTÃO NO CANTO INFERIOR DIREITO */}
-            <Link
-              to="/dashboard"
-              style={{
-                marginTop: "auto",
-                alignSelf: "flex-end",
-                color: "#60a5fa",
-                textDecoration: "none",
-                fontWeight: "bold",
-              }}
-            >
+            <Link to="/dashboard" className="link-bottom">
               Ver Dashboard →
             </Link>
           </div>
         </div>
 
-        {/* 📰 NOTÍCIAS + LINK */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: "40px",
-          }}
-        >
+        {/* 📰 HEADER */}
+        <div className="news-header">
           <h2>Últimas Notícias</h2>
 
           <Link to="/news" style={linkStyle}>
-            Ver todas as notícias →
+            Ver todas →
           </Link>
         </div>
 
-        {/* 📰 GRID 3x2 */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "20px",
-            marginTop: "10px",
-          }}
-        >
+        {/* 📰 GRID */}
+        <div className="news-grid">
           {news.map((item, index) => {
             const image =
               item.thumbnail ||
@@ -151,23 +113,8 @@ export default function Home() {
               "https://via.placeholder.com/300";
 
             return (
-              <div
-                key={index}
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                }}
-              >
-                <img
-                  src={image}
-                  alt="news"
-                  style={{
-                    width: "100%",
-                    height: "160px",
-                    objectFit: "cover",
-                  }}
-                />
+              <div key={index} className="card news-card">
+                <img src={image} alt="news" />
 
                 <div style={{ padding: "15px" }}>
                   <h3 style={{ fontSize: "16px" }}>{item.title}</h3>
