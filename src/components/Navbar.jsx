@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import logo from "../assets/logo.png";
@@ -6,20 +6,25 @@ import logo from "../assets/logo.png";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
-  const [dark, setDark] = useState(false);
+
+  // 🔥 estado persistente
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  // 🔥 aplica tema sempre que muda
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [dark]);
 
   function toggleDark() {
-    setDark((prev) => {
-      const newValue = !prev;
-
-      if (newValue) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-
-      return newValue;
-    });
+    setDark((prev) => !prev);
   }
 
   const linkStyle = {
@@ -64,7 +69,7 @@ export default function Navbar() {
         CryptoView
       </Link>
 
-      {/* 🔥 NAV */}
+      {/* NAV DESKTOP */}
       <nav className="nav-links">
         <Link to="/" style={linkStyle}>Home</Link>
         <Link to="/dashboard" style={linkStyle}>Dashboard</Link>
@@ -77,7 +82,7 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* ☰ MENU */}
+      {/* MENU MOBILE */}
       <div style={{ position: "relative", zIndex: 2 }}>
         <button
           onClick={() => setOpen((prev) => !prev)}
@@ -127,11 +132,22 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/profile" style={{ ...linkStyle, fontWeight: "bold", display: "block", textAlign: "center" }}>
+                <Link
+                  to="/profile"
+                  style={{
+                    ...linkStyle,
+                    fontWeight: "bold",
+                    display: "block",
+                    textAlign: "center",
+                  }}
+                >
                   {user?.username}
                 </Link>
 
-                <button onClick={logout} style={{ width: "100%", marginTop: "10px" }}>
+                <button
+                  onClick={logout}
+                  style={{ width: "100%", marginTop: "10px" }}
+                >
                   Logout
                 </button>
               </>
@@ -139,6 +155,7 @@ export default function Navbar() {
 
             <hr />
 
+            {/* 🌙 TOGGLE */}
             <button onClick={toggleDark} style={{ width: "100%" }}>
               {dark ? "Modo Claro" : "Modo Escuro"}
             </button>
