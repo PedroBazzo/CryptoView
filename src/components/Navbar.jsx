@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate(); // 🔥 NOVO
 
   // 🔥 estado persistente
   const [dark, setDark] = useState(() => {
@@ -25,6 +26,13 @@ export default function Navbar() {
 
   function toggleDark() {
     setDark((prev) => !prev);
+  }
+
+  // 🔥 LOGOUT COM REDIRECIONAMENTO
+  function handleLogout() {
+    logout();
+    setOpen(false); // fecha menu mobile
+    navigate("/"); // volta pra home
   }
 
   const linkStyle = {
@@ -145,7 +153,7 @@ export default function Navbar() {
                 </Link>
 
                 <button
-                  onClick={logout}
+                  onClick={handleLogout} // 🔥 AQUI
                   style={{ width: "100%", marginTop: "10px" }}
                 >
                   Logout

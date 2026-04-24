@@ -6,9 +6,29 @@ import { getCryptoNews } from "../services/api/news";
 export default function News() {
   const [news, setNews] = useState([]);
   const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  const itemsPerPage = 15;
-  const totalPages = Math.ceil(news.length / itemsPerPage);
+  // 🔥 define quantidade de itens por resolução
+  function updateItemsPerPage() {
+    const width = window.innerWidth;
+
+    if (width <= 768) {
+      setItemsPerPage(8); // mobile (1x8)
+    } else if (width <= 1024) {
+      setItemsPerPage(12); // tablet (2x6)
+    } else {
+      setItemsPerPage(15); // desktop (3x5)
+    }
+  }
+
+  useEffect(() => {
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+
+    return () => {
+      window.removeEventListener("resize", updateItemsPerPage);
+    };
+  }, []);
 
   useEffect(() => {
     async function fetchNews() {
@@ -19,7 +39,10 @@ export default function News() {
     fetchNews();
   }, []);
 
-  // 🔥 evita bug de página inválida
+  // 🔥 recalcula páginas dinamicamente
+  const totalPages = Math.ceil(news.length / itemsPerPage);
+
+  // 🔥 evita página inválida ao redimensionar
   useEffect(() => {
     if (page > totalPages) {
       setPage(totalPages || 1);
@@ -89,7 +112,7 @@ export default function News() {
           ))}
         </div>
 
-        {/* 🔗 PAGINAÇÃO ESTILO LINK */}
+        {/* 🔗 PAGINAÇÃO */}
         {totalPages > 1 && (
           <div
             style={{
@@ -112,10 +135,7 @@ export default function News() {
             {page < totalPages && (
               <span
                 onClick={nextPage}
-                style={{
-                  ...linkStyle,
-                  marginLeft: "auto",
-                }}
+                style={{ ...linkStyle, marginLeft: "auto" }}
               >
                 Próxima página →
               </span>
