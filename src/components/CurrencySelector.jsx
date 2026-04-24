@@ -3,6 +3,7 @@ export default function CurrencySelector({ value, onChange }) {
     <div>
       <label>Moeda:</label>
       <select
+        className="select"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >

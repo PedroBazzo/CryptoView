@@ -7,6 +7,7 @@ export default function CryptoSelector({ value, onChange }) {
     <div>
       <label>Criptomoeda:</label>
       <select
+        className="select"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >

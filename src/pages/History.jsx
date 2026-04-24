@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getHistory } from "../services/api/crypto";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Chart from "../components/Chart";
 import CryptoSelector from "../components/CryptoSelector";
 import CurrencySelector from "../components/CurrencySelector";
@@ -16,7 +17,6 @@ export default function History() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // 📊 cálculo de variação
   function calculateVariation(data) {
     if (!data || data.length < 2) return 0;
 
@@ -37,10 +37,7 @@ export default function History() {
         if (res && Array.isArray(res.prices)) {
           setData(res.prices);
           setVariation(calculateVariation(res.prices));
-        } else {
-          throw new Error("Resposta inválida");
         }
-
       } catch (err) {
         console.error(err);
         setError("Erro ao carregar dados.");
@@ -54,51 +51,71 @@ export default function History() {
   }, [crypto, currency, days]);
 
   return (
-    <div>
+    <>
       <Navbar />
 
-      <h1>Histórico de Criptomoedas</h1>
+      <main style={{ padding: "20px" }}>
+        <h1>Histórico</h1>
 
-      {/* SELECTORS */}
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        <CryptoSelector value={crypto} onChange={setCrypto} />
-        <CurrencySelector value={currency} onChange={setCurrency} />
-      </div>
+        {/* 🔥 TOP CARDS */}
+        <div className="history-top">
+          
+          {/* 🎛️ SELECTOR CARD */}
+          <div className="card">
+            <h2>Configurações</h2>
 
-      {/* 📅 PERÍODO */}
-      <div style={{ marginTop: "10px" }}>
-        <label>Período:</label>
-        <select value={days} onChange={(e) => setDays(Number(e.target.value))}>
-          <option value={7}>7 dias</option>
-          <option value={30}>30 dias</option>
-          <option value={90}>90 dias</option>
-          <option value={365}>1 ano</option>
-        </select>
-      </div>
+            <div className="selector-row">
+              <CryptoSelector value={crypto} onChange={setCrypto} />
+              <CurrencySelector value={currency} onChange={setCurrency} />
+            </div>
 
-      {loading && <p>Carregando dados...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+            <div style={{ marginTop: "10px" }}>
+              <label>Período:</label>
+              <select
+                className="select"
+                value={days}
+                onChange={(e) => setDays(Number(e.target.value))}
+              >
+                <option value={7}>7 dias</option>
+                <option value={30}>30 dias</option>
+                <option value={90}>90 dias</option>
+                <option value={365}>1 ano</option>
+              </select>
+            </div>
+          </div>
 
-      {!loading && !error && data.length > 0 && (
-        <>
-          <Chart data={data} />
+          {/* 📊 VARIAÇÃO CARD */}
+          <div className="card variation-card">
+            <h2>Variação</h2>
 
-          {/* 📊 VARIAÇÃO */}
-          <p
-            style={{
-              marginTop: "10px",
-              fontWeight: "bold",
-              color: variation >= 0 ? "green" : "red",
-            }}
-          >
-            Variação: {variation.toFixed(2)}%
-          </p>
-        </>
-      )}
+            <p
+              style={{
+                fontSize: "32px",
+                fontWeight: "bold",
+                color: variation >= 0 ? "#16a34a" : "#dc2626",
+              }}
+            >
+              {variation.toFixed(2)}%
+            </p>
 
-      {!loading && !error && data.length === 0 && (
-        <p>Nenhum dado disponível.</p>
-      )}
-    </div>
+            <p style={{ fontSize: "14px", opacity: 0.7 }}>
+              {variation >= 0 ? "Alta no período" : "Queda no período"}
+            </p>
+          </div>
+        </div>
+
+        {/* 📈 GRÁFICO */}
+        <div className="card chart-card">
+          {loading && <p>Carregando...</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          {!loading && !error && data.length > 0 && (
+            <Chart data={data} />
+          )}
+        </div>
+      </main>
+
+      <Footer />
+    </>
   );
 }

@@ -258,3 +258,80 @@ code {
   font-size: 12px;
   opacity: 0.8;
 }
+
+/* ===================================================== */
+/* 🔥 NOVO: HISTORY PAGE DESIGN */
+/* ===================================================== */
+
+/* 🔝 TOPO (selectors + variação) */
+.history-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  .history-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 🎛️ SELECTORES */
+.selector-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* 📊 VARIAÇÃO */
+.variation-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📈 GRÁFICO */
+.chart-card {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+/* 🔥 SELECT MODERNO */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 8px 35px 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  /* seta custom */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%239ca3af' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* 🔥 HOVER */
+.select:hover {
+  border-color: var(--accent);
+}
+
+/* 🔥 FOCUS */
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
