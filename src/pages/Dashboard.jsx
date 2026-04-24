@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import ConverterForm from "../components/ConverterForm";
 import ResultCard from "../components/ResultCard";
 import CryptoSelector from "../components/CryptoSelector";
+import CurrencySelector from "../components/CurrencySelector"; // 🔥 NOVO
 import Comparison from "../components/Comparison";
 import { Link } from "react-router-dom";
 
@@ -27,13 +28,11 @@ export default function Dashboard() {
         </p>
       )}
 
-      {/* 🪙 Seletor */}
-      <CryptoSelector
-        crypto={crypto}
-        setCrypto={setCrypto}
-        currency={currency}
-        setCurrency={setCurrency}
-      />
+      {/* 🪙 Seletores */}
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+        <CryptoSelector value={crypto} onChange={setCrypto} />
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
 
       {/* 🔄 Conversor */}
       <ConverterForm
