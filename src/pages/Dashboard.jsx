@@ -103,7 +103,6 @@ export default function Dashboard() {
               <p style={{ color: "gray" }}>
                 O comparador está disponível apenas para usuários logados.
               </p>
-              <Link to="/login">Fazer login</Link>
             </div>
           )}
         </div>
