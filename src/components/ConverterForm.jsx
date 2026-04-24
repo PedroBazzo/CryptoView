@@ -6,12 +6,12 @@ export default function ConverterForm({ crypto, currency, setResult }) {
 
   async function handleConvert() {
     try {
-      console.log("Crypto:", crypto);
-      console.log("Currency:", currency);
+      if (!amount || amount <= 0) {
+        alert("Digite um valor válido");
+        return;
+      }
 
       const price = await getCryptoPrice(crypto, currency);
-
-      console.log("Preço:", price);
 
       if (price === undefined || price === null) {
         alert("Erro ao obter preço");
@@ -27,14 +27,39 @@ export default function ConverterForm({ crypto, currency, setResult }) {
   }
 
   return (
-    <div>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(Number(e.target.value))}
-      />
+    <div
+      style={{
+        marginTop: "10px",
+        maxWidth: "420px", // 🔥 controla largura igual aos seletores
+        width: "100%",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          width: "100%",
+        }}
+      >
+        <input
+          type="number"
+          className="input"
+          style={{ flex: 2 }}
+          value={amount}
+          min="0"
+          step="any"
+          onChange={(e) => setAmount(Number(e.target.value))}
+        />
 
-      <button onClick={handleConvert}>Converter</button>
+        <button
+          type="button"
+          className="button"
+          style={{ flex: 1 }}
+          onClick={handleConvert}
+        >
+          Converter
+        </button>
+      </div>
     </div>
   );
 }
