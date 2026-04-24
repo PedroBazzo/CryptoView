@@ -3,14 +3,28 @@ import { getHistory } from "../services/api/crypto";
 import Navbar from "../components/Navbar";
 import Chart from "../components/Chart";
 import CryptoSelector from "../components/CryptoSelector";
-import CurrencySelector from "../components/CurrencySelector"; // 🔥 NOVO
+import CurrencySelector from "../components/CurrencySelector";
 
 export default function History() {
   const [crypto, setCrypto] = useState("bitcoin");
   const [currency, setCurrency] = useState("brl");
+  const [days, setDays] = useState(7);
+
   const [data, setData] = useState([]);
+  const [variation, setVariation] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // 📊 cálculo de variação
+  function calculateVariation(data) {
+    if (!data || data.length < 2) return 0;
+
+    const first = data[0][1];
+    const last = data[data.length - 1][1];
+
+    return ((last - first) / first) * 100;
+  }
 
   useEffect(() => {
     async function load() {
@@ -18,20 +32,18 @@ export default function History() {
         setLoading(true);
         setError(null);
 
-        const res = await getHistory(crypto, currency);
+        const res = await getHistory(crypto, currency, days);
 
-        console.log("CRYPTO:", crypto);
-        console.log("API RESPONSE:", res);
-
-        if (res && res.prices && Array.isArray(res.prices)) {
+        if (res && Array.isArray(res.prices)) {
           setData(res.prices);
+          setVariation(calculateVariation(res.prices));
         } else {
-          throw new Error("Resposta inválida da API");
+          throw new Error("Resposta inválida");
         }
 
       } catch (err) {
-        console.error("Erro ao buscar histórico:", err);
-        setError("Erro ao carregar dados. Tente novamente.");
+        console.error(err);
+        setError("Erro ao carregar dados.");
         setData([]);
       } finally {
         setLoading(false);
@@ -39,7 +51,7 @@ export default function History() {
     }
 
     load();
-  }, [crypto, currency]);
+  }, [crypto, currency, days]);
 
   return (
     <div>
@@ -47,18 +59,41 @@ export default function History() {
 
       <h1>Histórico de Criptomoedas</h1>
 
-      {/* 🔥 SELECTORS */}
+      {/* SELECTORS */}
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <CryptoSelector value={crypto} onChange={setCrypto} />
         <CurrencySelector value={currency} onChange={setCurrency} />
       </div>
 
-      {loading && <p>Carregando dados...</p>}
+      {/* 📅 PERÍODO */}
+      <div style={{ marginTop: "10px" }}>
+        <label>Período:</label>
+        <select value={days} onChange={(e) => setDays(Number(e.target.value))}>
+          <option value={7}>7 dias</option>
+          <option value={30}>30 dias</option>
+          <option value={90}>90 dias</option>
+          <option value={365}>1 ano</option>
+        </select>
+      </div>
 
+      {loading && <p>Carregando dados...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {!loading && !error && data.length > 0 && (
-        <Chart data={data} />
+        <>
+          <Chart data={data} />
+
+          {/* 📊 VARIAÇÃO */}
+          <p
+            style={{
+              marginTop: "10px",
+              fontWeight: "bold",
+              color: variation >= 0 ? "green" : "red",
+            }}
+          >
+            Variação: {variation.toFixed(2)}%
+          </p>
+        </>
       )}
 
       {!loading && !error && data.length === 0 && (
