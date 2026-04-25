@@ -8,7 +8,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-export default function Chart({ data }) {
+export default function Chart({ data, currency = "brl" }) {
   const isMobile = window.innerWidth < 768;
 
   const formatted = data.map(([time, value]) => ({
@@ -31,6 +31,26 @@ export default function Chart({ data }) {
     max < 1000 ? 2 :
     0;
 
+  // 🔥 símbolo da moeda
+  const currencySymbol = {
+    brl: "R$",
+    usd: "$",
+    eur: "€",
+  };
+
+  const symbol = currencySymbol[currency] || "";
+
+  // 🔥 CONTROLE INTELIGENTE DE LABELS
+  const getInterval = () => {
+    const length = formatted.length;
+
+    if (length <= 7) return 0;
+    if (length <= 30) return 4;
+    if (length <= 90) return 10;
+    if (length <= 180) return 20;
+    return Math.floor(length / 6);
+  };
+
   return (
     <ResponsiveContainer width="100%" height={isMobile ? 280 : 350}>
       <LineChart
@@ -48,7 +68,7 @@ export default function Chart({ data }) {
           dataKey="time"
           tick={{ fontSize: isMobile ? 10 : 12 }}
           padding={{ left: 10, right: 10 }}
-          interval={isMobile ? "preserveStartEnd" : 0} // 🔥 reduz labels
+          interval={isMobile ? "preserveStartEnd" : getInterval()}
         />
 
         <YAxis
@@ -57,8 +77,8 @@ export default function Chart({ data }) {
           tick={{ fontSize: isMobile ? 10 : 12 }}
           tickFormatter={(value) =>
             isMobile
-              ? `R$ ${(value / 1000).toFixed(0)}K` // 🔥 simplifica
-              : `R$ ${value.toLocaleString("pt-BR", {
+              ? `${symbol} ${(value / 1000).toFixed(0)}K`
+              : `${symbol} ${value.toLocaleString("pt-BR", {
                   minimumFractionDigits: decimals,
                   maximumFractionDigits: decimals,
                 })}`
@@ -71,13 +91,15 @@ export default function Chart({ data }) {
             border: "none",
             borderRadius: "8px",
             fontSize: isMobile ? "12px" : "14px",
+            color: "#fff",
           }}
           formatter={(value) =>
-            `R$ ${value.toLocaleString("pt-BR", {
+            `${symbol} ${value.toLocaleString("pt-BR", {
               minimumFractionDigits: decimals,
               maximumFractionDigits: decimals,
             })}`
           }
+          labelFormatter={(label) => `Data: ${label}`}
         />
 
         <Line

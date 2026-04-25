@@ -110,7 +110,7 @@ export default function History() {
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           {!loading && !error && data.length > 0 && (
-            <Chart data={data} />
+            <Chart data={data} currency={currency} />
           )}
         </div>
       </main>
