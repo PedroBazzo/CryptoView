@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Captcha from "../components/Captcha";
 
 export default function Login() {
   const { login } = useAuth();
@@ -11,21 +14,16 @@ export default function Login() {
     password: "",
   });
 
-  const [captcha, setCaptcha] = useState("");
-  const [captchaInput, setCaptchaInput] = useState("");
-
-  // 🔢 gerar captcha
-  function generateCaptcha() {
-    const value = Math.floor(1000 + Math.random() * 9000);
-    setCaptcha(value.toString());
-  }
-
-  useEffect(() => {
-    generateCaptcha();
-  }, []);
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [captchaRefresh, setCaptchaRefresh] = useState(0);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  // 🔥 regeneração robusta
+  function refreshCaptcha() {
+    setCaptchaRefresh((prev) => prev + 1);
   }
 
   function handleSubmit(e) {
@@ -33,12 +31,13 @@ export default function Login() {
 
     if (!form.identifier || !form.password) {
       alert("Preencha todos os campos");
+      refreshCaptcha();
       return;
     }
 
-    if (captchaInput !== captcha) {
-      alert("Captcha incorreto");
-      generateCaptcha();
+    if (!captchaValid) {
+      alert("Captcha inválido");
+      refreshCaptcha();
       return;
     }
 
@@ -47,48 +46,64 @@ export default function Login() {
       navigate("/");
     } catch (err) {
       alert(err.message);
+      refreshCaptcha(); // 🔥 erro também regenera
     }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <>
+      <Navbar />
 
-      <form onSubmit={handleSubmit}>
+      <main
+        style={{
+          padding: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div className="profile-card">
+          <h1>Login</h1>
 
-        <input
-          name="identifier"
-          placeholder="Email ou usuário"
-          onChange={handleChange}
-          required
-        />
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              marginTop: "15px",
+            }}
+          >
+            <input
+              name="identifier"
+              placeholder="Email ou usuário"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Senha"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="password"
+              type="password"
+              placeholder="Senha"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        {}
-        <div>
-          <p>Digite o código: <strong>{captcha}</strong></p>
+            {/* 🔐 CAPTCHA NOVO */}
+            <Captcha
+              onValidate={setCaptchaValid}
+              refresh={captchaRefresh}
+            />
 
-          <input
-            placeholder="Captcha"
-            value={captchaInput}
-            onChange={(e) => setCaptchaInput(e.target.value)}
-            required
-          />
-
-          <button type="button" onClick={generateCaptcha}>
-            Novo código
-          </button>
+            <button type="submit" className="button">
+              Entrar
+            </button>
+          </form>
         </div>
+      </main>
 
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+      <Footer />
+    </>
   );
 }

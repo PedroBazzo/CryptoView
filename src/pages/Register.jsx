@@ -2,6 +2,9 @@ import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Captcha from "../components/Captcha";
 
 export default function Register() {
   const { register } = useAuth();
@@ -12,24 +15,21 @@ export default function Register() {
     name: "",
     lastname: "",
     email: "",
+    confirmEmail: "",
     password: "",
     confirmPassword: "",
   });
 
-  const [captcha, setCaptcha] = useState("");
-  const [captchaInput, setCaptchaInput] = useState("");
-
-  function generateCaptcha() {
-    const value = Math.floor(1000 + Math.random() * 9000);
-    setCaptcha(value.toString());
-  }
-
-  useState(() => {
-    generateCaptcha();
-  }, []);
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [captchaRefresh, setCaptchaRefresh] = useState(0);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  // 🔥 força regeneração do captcha
+  function refreshCaptcha() {
+    setCaptchaRefresh((prev) => prev + 1);
   }
 
   async function handleSubmit(e) {
@@ -40,21 +40,30 @@ export default function Register() {
       !form.name ||
       !form.lastname ||
       !form.email ||
+      !form.confirmEmail ||
       !form.password ||
       !form.confirmPassword
     ) {
       alert("Preencha todos os campos");
+      refreshCaptcha();
+      return;
+    }
+
+    if (form.email !== form.confirmEmail) {
+      alert("Os emails não coincidem");
+      refreshCaptcha();
       return;
     }
 
     if (form.password !== form.confirmPassword) {
       alert("As senhas não coincidem");
+      refreshCaptcha();
       return;
     }
 
-    if (captchaInput !== captcha) {
-      alert("Captcha incorreto");
-      generateCaptcha();
+    if (!captchaValid) {
+      alert("Captcha inválido");
+      refreshCaptcha();
       return;
     }
 
@@ -76,77 +85,107 @@ export default function Register() {
 
     } catch (err) {
       alert(err.message);
+      refreshCaptcha(); // 🔥 erro também regenera
     }
   }
 
   return (
-    <div>
-      <h1>Criar Conta</h1>
+    <>
+      <Navbar />
 
-      <form onSubmit={handleSubmit}>
+      <main
+        style={{
+          padding: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div className="profile-card">
+          <h1>Criar Conta</h1>
 
-        <input
-          name="username"
-          placeholder="Nome de usuário"
-          onChange={handleChange}
-          required
-        />
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              marginTop: "15px",
+            }}
+          >
+            <input
+              name="username"
+              placeholder="Nome de usuário"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="name"
-          placeholder="Nome"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="name"
+              placeholder="Nome"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="lastname"
-          placeholder="Sobrenome"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="lastname"
+              placeholder="Sobrenome"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Senha"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="confirmEmail"
+              type="email"
+              placeholder="Confirmar email"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirmar senha"
-          onChange={handleChange}
-          required
-        />
+            <input
+              name="password"
+              type="password"
+              placeholder="Senha"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        {}
-        <div>
-          <p>Digite o código: <strong>{captcha}</strong></p>
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirmar senha"
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-          <input
-            placeholder="Captcha"
-            value={captchaInput}
-            onChange={(e) => setCaptchaInput(e.target.value)}
-            required
-          />
+            {/* 🔐 CAPTCHA */}
+            <Captcha
+              onValidate={setCaptchaValid}
+              refresh={captchaRefresh}
+            />
 
-          <button type="button" onClick={generateCaptcha}>
-            Gerar novo código
-          </button>
+            <button type="submit" className="button">
+              Cadastrar
+            </button>
+          </form>
         </div>
+      </main>
 
-        <button type="submit">Cadastrar</button>
-      </form>
-    </div>
+      <Footer />
+    </>
   );
 }
