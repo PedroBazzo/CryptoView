@@ -1,16 +1,122 @@
-# React + Vite
+# 📊 CryptoView
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma web para acompanhamento, análise e comparação de criptomoedas
+em tempo real.
 
-Currently, two official plugins are available:
+Este projeto foi desenvolvido para fins acadêmicos, com o objetivo de
+aplicar conceitos de desenvolvimento frontend moderno, consumo de APIs,
+visualização de dados e boas práticas de usabilidade e SEO.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+------------------------------------------------------------------------
 
-## React Compiler
+## 🎯 Objetivo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O CryptoView tem como objetivo fornecer uma interface simples e
+intuitiva para:
 
-## Expanding the ESLint configuration
+-   Visualizar preços de criptomoedas
+-   Analisar variações ao longo do tempo
+-   Comparar ativos digitais
+-   Acompanhar notícias do mercado cripto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+------------------------------------------------------------------------
+
+## ⚙️ Funcionalidades
+
+-   📈 Dashboard com gráficos interativos
+-   🔄 Conversor de criptomoedas
+-   📊 Comparador de ativos (com variação percentual)
+-   📰 Feed de notícias em tempo real
+-   🔐 Sistema de autenticação (login e cadastro)
+-   🛡️ Validação com captcha personalizado
+-   📱 Layout responsivo (mobile e desktop)
+
+------------------------------------------------------------------------
+
+## 🛠️ Tecnologias Utilizadas
+
+-   React → construção da interface
+-   Recharts → gráficos e visualização de dados
+-   EmailJS → envio de email no cadastro
+-   Vercel → deploy da aplicação
+-   APIs públicas de criptomoedas → dados em tempo real
+
+------------------------------------------------------------------------
+
+## 🧠 Conceitos Aplicados
+
+Durante o desenvolvimento foram aplicados:
+
+-   Componentização e reutilização de código
+-   Gerenciamento de estado com hooks
+-   Consumo de APIs REST
+-   Manipulação e formatação de dados
+-   Responsividade com CSS
+-   SEO básico
+-   Versionamento com Git
+
+------------------------------------------------------------------------
+
+## 🌐 Deploy
+
+O projeto está disponível em:
+
+[crypto-view-bay.vercel.app/](https://crypto-view-bay.vercel.app/)
+
+------------------------------------------------------------------------
+
+## 📁 Estrutura do Projeto
+
+src/ ├── components/ \# Componentes reutilizáveis ├── pages/ \# Páginas
+da aplicação ├── services/ \# Integração com APIs ├── hooks/ \# Lógica
+reutilizável (ex: autenticação) └── routes/ \# Rotas de navegação
+
+------------------------------------------------------------------------
+
+## 🔐 Autenticação
+
+O sistema de autenticação é baseado em armazenamento local
+(LocalStorage), sem backend dedicado.
+
+-   Login por usuário ou email
+-   Cadastro com validações
+-   Proteção com captcha customizado
+
+------------------------------------------------------------------------
+
+## ⚠️ Limitações
+
+-   Não possui backend próprio
+-   Dados de autenticação não são persistidos em servidor
+-   Depende de APIs públicas (sujeito a disponibilidade)
+
+------------------------------------------------------------------------
+
+## 🔍 SEO
+
+Foram aplicadas práticas básicas de SEO:
+
+-   Meta description
+-   Open Graph
+-   Estrutura semântica
+
+------------------------------------------------------------------------
+
+## 📚 Considerações Finais
+
+O projeto demonstra a aplicação prática de conceitos fundamentais de
+desenvolvimento frontend moderno, com foco em usabilidade, organização
+de código e integração com serviços externos.
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Autores
+
+Desenvolvido por Adenilson Turis Alves, Filipe Sameti Moraes Binja e Pedro Ernesto Provasi Bazzo
+Projeto acadêmico
+
+------------------------------------------------------------------------
+
+## 📄 Licença
+
+Este projeto é destinado exclusivamente para fins educacionais.
