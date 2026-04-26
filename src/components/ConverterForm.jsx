@@ -30,7 +30,7 @@ export default function ConverterForm({ crypto, currency, setResult }) {
     <div
       style={{
         marginTop: "10px",
-        maxWidth: "420px", // 🔥 controla largura igual aos seletores
+        maxWidth: "420px", 
         width: "100%",
       }}
     >

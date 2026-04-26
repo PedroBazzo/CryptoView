@@ -89,7 +89,6 @@ export default function Comparison() {
         </div>
       </div>
 
-      {/* 🔥 CARDS LADO A LADO */}
       {result && (
         <div className="comparison-cards">
           {/* 💰 RESULTADOS */}
@@ -117,7 +116,6 @@ export default function Comparison() {
             </p>
           </div>
 
-          {/* 📊 VARIAÇÃO */}
           <div className="card">
             <h3>Variação (7 dias)</h3>
 
@@ -132,7 +130,6 @@ export default function Comparison() {
         </div>
       )}
 
-      {/* 📈 GRÁFICO */}
       {mergedData.length > 0 && (
         <div className="card" style={{ marginTop: "15px" }}>
           <h3>Comparação (7 dias)</h3>

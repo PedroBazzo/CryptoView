@@ -1,14 +1,11 @@
-// 🔁 cache simples
 const cache = {};
 
-// 💱 taxas fixas (base USD)
 const rates = {
   usd: 1,
   brl: 5,
   eur: 0.9,
 };
 
-// 🔗 mapeamento das criptos → símbolos Binance
 const symbolMap = {
   bitcoin: "BTCUSDT",
   ethereum: "ETHUSDT",
@@ -22,7 +19,6 @@ const symbolMap = {
   litecoin: "LTCUSDT",
 };
 
-// 💰 PREÇO ATUAL
 export async function getCryptoPrice(crypto, currency = "usd") {
   const key = `${crypto}-${currency}`;
 
@@ -51,7 +47,6 @@ export async function getCryptoPrice(crypto, currency = "usd") {
   }
 }
 
-// 📈 HISTÓRICO DINÂMICO
 export async function getHistory(
   crypto = "bitcoin",
   currency = "usd",
@@ -61,7 +56,6 @@ export async function getHistory(
     const symbol = symbolMap[crypto];
     if (!symbol) throw new Error("Cripto não suportada");
 
-    // 🔥 define intervalo automaticamente
     let interval = "1d";
     if (days <= 7) interval = "1h";
     else if (days <= 30) interval = "4h";

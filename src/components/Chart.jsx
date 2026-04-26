@@ -31,7 +31,6 @@ export default function Chart({ data, currency = "brl" }) {
     max < 1000 ? 2 :
     0;
 
-  // 🔥 símbolo da moeda
   const currencySymbol = {
     brl: "R$",
     usd: "$",
@@ -40,7 +39,6 @@ export default function Chart({ data, currency = "brl" }) {
 
   const symbol = currencySymbol[currency] || "";
 
-  // 🔥 CONTROLE INTELIGENTE DE LABELS
   const getInterval = () => {
     const length = formatted.length;
 

@@ -8,7 +8,7 @@ export default {
 }
 
 export default {
-  darkMode: "class", // 👈 MUITO IMPORTANTE
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {},

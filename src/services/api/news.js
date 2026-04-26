@@ -15,10 +15,8 @@ export async function getCryptoNews() {
       )
     );
 
-    // 🔥 junta todas as notícias
     let allNews = results.flatMap((data) => data.items || []);
 
-    // 🔥 remove itens inválidos
     allNews = allNews.filter(
       (item) =>
         item &&
@@ -28,12 +26,10 @@ export async function getCryptoNews() {
         !item.link.includes("undefined")
     );
 
-    // 🔥 remove duplicadas (mesmo link)
     const uniqueNews = Array.from(
       new Map(allNews.map((item) => [item.link, item])).values()
     );
 
-    // 🔥 ordena por data (mais recentes primeiro)
     uniqueNews.sort(
       (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
     );

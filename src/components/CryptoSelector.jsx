@@ -11,10 +11,8 @@ export default function CryptoSelector({ value, onChange }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        {/* 🌐 público */}
         <option value="bitcoin">Bitcoin</option>
 
-        {/* 🔒 logado */}
         {user && (
           <>
             <option value="ethereum">Ethereum</option>

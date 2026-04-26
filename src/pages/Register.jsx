@@ -27,7 +27,6 @@ export default function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  // 🔥 força regeneração do captcha
   function refreshCaptcha() {
     setCaptchaRefresh((prev) => prev + 1);
   }
@@ -85,7 +84,7 @@ export default function Register() {
 
     } catch (err) {
       alert(err.message);
-      refreshCaptcha(); // 🔥 erro também regenera
+      refreshCaptcha();
     }
   }
 
@@ -172,7 +171,6 @@ export default function Register() {
               required
             />
 
-            {/* 🔐 CAPTCHA */}
             <Captcha
               onValidate={setCaptchaValid}
               refresh={captchaRefresh}

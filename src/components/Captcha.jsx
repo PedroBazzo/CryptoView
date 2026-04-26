@@ -24,7 +24,6 @@ export default function Captcha({ onValidate, refresh }) {
     generateCaptcha();
   }, []);
 
-  // 🔥 REGENERA AUTOMATICAMENTE
   useEffect(() => {
       generateCaptcha();
   }, [refresh]);

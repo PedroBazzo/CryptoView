@@ -21,7 +21,6 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  // 🔥 regeneração robusta
   function refreshCaptcha() {
     setCaptchaRefresh((prev) => prev + 1);
   }
@@ -46,7 +45,7 @@ export default function Login() {
       navigate("/");
     } catch (err) {
       alert(err.message);
-      refreshCaptcha(); // 🔥 erro também regenera
+      refreshCaptcha();
     }
   }
 
@@ -90,7 +89,6 @@ export default function Login() {
               required
             />
 
-            {/* 🔐 CAPTCHA NOVO */}
             <Captcha
               onValidate={setCaptchaValid}
               refresh={captchaRefresh}

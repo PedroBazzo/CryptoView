@@ -57,10 +57,8 @@ export default function History() {
       <main style={{ padding: "20px" }}>
         <h1>Histórico</h1>
 
-        {/* 🔥 TOP CARDS */}
         <div className="history-top">
-          
-          {/* 🎛️ SELECTOR CARD */}
+
           <div className="card">
             <h2>Configurações</h2>
 
@@ -84,7 +82,6 @@ export default function History() {
             </div>
           </div>
 
-          {/* 📊 VARIAÇÃO CARD */}
           <div className="card variation-card">
             <h2>Variação</h2>
 
@@ -104,7 +101,6 @@ export default function History() {
           </div>
         </div>
 
-        {/* 📈 GRÁFICO */}
         <div className="card chart-card">
           {loading && <p>Carregando...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}

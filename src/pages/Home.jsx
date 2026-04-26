@@ -58,7 +58,6 @@ export default function Home() {
       >
         <h1>CryptoView</h1>
 
-        {/* 🔥 SOBRE + VISÃO GERAL */}
         <div className="home-top">
           {/* SOBRE */}
           <div className="card">
@@ -71,7 +70,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* VISÃO GERAL */}
           <div className="card">
             <h2>Visão Geral do Mercado</h2>
 
@@ -95,7 +93,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 📰 HEADER */}
         <div className="news-header">
           <h2>Últimas Notícias</h2>
 
@@ -104,7 +101,6 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 📰 GRID */}
         <div className="news-grid">
           {news.map((item, index) => {
             const image =

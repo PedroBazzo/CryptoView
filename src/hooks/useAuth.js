@@ -9,7 +9,6 @@ import {
 export default function useAuth() {
   const [user, setUser] = useState(null);
 
-  // 🔥 SEMPRE sincroniza com localStorage
   useEffect(() => {
     function syncUser() {
       setUser(getCurrentUser());
@@ -17,7 +16,6 @@ export default function useAuth() {
 
     syncUser();
 
-    // escuta mudanças no localStorage
     window.addEventListener("storage", syncUser);
 
     return () => {
@@ -39,7 +37,6 @@ export default function useAuth() {
    logoutUser();
    setUser(null);
 
-   // 🔥 força atualização global
    window.dispatchEvent(new Event("storage"));
  }
 

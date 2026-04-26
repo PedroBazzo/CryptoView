@@ -8,16 +8,15 @@ export default function News() {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  // 🔥 define quantidade de itens por resolução
   function updateItemsPerPage() {
     const width = window.innerWidth;
 
     if (width <= 768) {
-      setItemsPerPage(8); // mobile (1x8)
+      setItemsPerPage(8); 
     } else if (width <= 1024) {
-      setItemsPerPage(12); // tablet (2x6)
+      setItemsPerPage(12); 
     } else {
-      setItemsPerPage(15); // desktop (3x5)
+      setItemsPerPage(15);
     }
   }
 
@@ -39,10 +38,8 @@ export default function News() {
     fetchNews();
   }, []);
 
-  // 🔥 recalcula páginas dinamicamente
   const totalPages = Math.ceil(news.length / itemsPerPage);
 
-  // 🔥 evita página inválida ao redimensionar
   useEffect(() => {
     if (page > totalPages) {
       setPage(totalPages || 1);
@@ -82,7 +79,6 @@ export default function News() {
       <main style={{ padding: "20px" }}>
         <h1>Notícias</h1>
 
-        {/* 📰 GRID */}
         <div className="news-grid">
           {currentNews.map((item, index) => (
             <div key={index} className="card news-card">
@@ -112,7 +108,6 @@ export default function News() {
           ))}
         </div>
 
-        {/* 🔗 PAGINAÇÃO */}
         {totalPages > 1 && (
           <div
             style={{
@@ -122,7 +117,6 @@ export default function News() {
               alignItems: "center",
             }}
           >
-            {/* ⬅️ ANTERIOR */}
             {page > 1 ? (
               <span onClick={prevPage} style={linkStyle}>
                 ← Página anterior
@@ -131,7 +125,6 @@ export default function News() {
               <div />
             )}
 
-            {/* ➡️ PRÓXIMA */}
             {page < totalPages && (
               <span
                 onClick={nextPage}

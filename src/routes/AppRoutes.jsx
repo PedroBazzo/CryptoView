@@ -25,16 +25,13 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
 
-        {/* 🌐 públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 🔓 públicas */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/news" element={<News />} />
 
-        {/* 🔒 privadas */}
         <Route
           path="/history"
           element={
@@ -53,7 +50,6 @@ export default function AppRoutes() {
           }
         />
 
-        {/* fallback */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

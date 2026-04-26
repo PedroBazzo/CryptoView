@@ -40,8 +40,8 @@ export default function Footer() {
         textAlign: "center",
         background: "#1e3a8a",
         color: "#fff",
-        width: "100%", // 🔥 garante largura total
-        boxSizing: "border-box", // 🔥 evita overflow
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
       <p>© 2026 CryptoView</p>
@@ -49,7 +49,7 @@ export default function Footer() {
       <p
         style={{
           marginTop: "10px",
-          maxWidth: "600px", // 🔥 evita texto estourar
+          maxWidth: "600px",
           marginInline: "auto",
         }}
       >
@@ -63,7 +63,7 @@ export default function Footer() {
           display: "flex",
           justifyContent: "center",
           gap: "15px",
-          flexWrap: "wrap", // 🔥 quebra linha automático
+          flexWrap: "wrap",
         }}
       >
         <Link to="/" style={linkStyle}>Home</Link>

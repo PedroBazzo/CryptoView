@@ -11,17 +11,14 @@ import { Link } from "react-router-dom";
 export default function Dashboard() {
   const { user } = useAuth();
 
-  // 🔥 estado atual (inputs)
   const [crypto, setCrypto] = useState("bitcoin");
   const [currency, setCurrency] = useState("brl");
 
-  // 🔥 estado confirmado (resultado exibido)
   const [selectedCrypto, setSelectedCrypto] = useState("bitcoin");
   const [selectedCurrency, setSelectedCurrency] = useState("brl");
 
   const [result, setResult] = useState(null);
 
-  // 🔥 símbolo da moeda
   const currencySymbol = {
     brl: "R$",
     usd: "$",
@@ -35,14 +32,12 @@ export default function Dashboard() {
       <main style={{ padding: "20px" }}>
         <h1>Dashboard</h1>
 
-        {/* 🔒 Aviso */}
         {!user && (
           <p style={{ color: "orange" }}>
             Você está usando o modo público. Faça login para acessar mais criptomoedas e o comparador.
           </p>
         )}
 
-        {/* 🔥 CARD CONVERSOR */}
         <div className="card" style={{ marginTop: "20px" }}>
           <h2>Conversor</h2>
 
@@ -52,7 +47,6 @@ export default function Dashboard() {
             <CurrencySelector value={currency} onChange={setCurrency} />
           </div>
 
-          {/* FORM */}
           <div style={{ marginTop: "15px" }}>
             <ConverterForm
               crypto={crypto}
@@ -65,7 +59,6 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* RESULTADO */}
           {result !== null && (
             <div
               style={{
@@ -92,7 +85,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* ⚔️ COMPARADOR */}
         <div className="card" style={{ marginTop: "20px" }}>
           <h2>Comparador</h2>
 

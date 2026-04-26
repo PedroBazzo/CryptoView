@@ -6,14 +6,12 @@ import logo from "../assets/logo.png";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
-  const navigate = useNavigate(); // 🔥 NOVO
+  const navigate = useNavigate();
 
-  // 🔥 estado persistente
   const [dark, setDark] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
-  // 🔥 aplica tema sempre que muda
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add("dark");
@@ -28,11 +26,10 @@ export default function Navbar() {
     setDark((prev) => !prev);
   }
 
-  // 🔥 LOGOUT COM REDIRECIONAMENTO
   function handleLogout() {
     logout();
-    setOpen(false); // fecha menu mobile
-    navigate("/"); // volta pra home
+    setOpen(false); 
+    navigate("/"); 
   }
 
   const linkStyle = {
@@ -54,7 +51,6 @@ export default function Navbar() {
         width: "100%",
       }}
     >
-      {/* LOGO */}
       <Link
         to="/"
         style={{
@@ -77,7 +73,6 @@ export default function Navbar() {
         CryptoView
       </Link>
 
-      {/* NAV DESKTOP */}
       <nav className="nav-links">
         <Link to="/" style={linkStyle}>Home</Link>
         <Link to="/dashboard" style={linkStyle}>Dashboard</Link>
@@ -90,7 +85,6 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* MENU MOBILE */}
       <div style={{ position: "relative", zIndex: 2 }}>
         <button
           onClick={() => setOpen((prev) => !prev)}
@@ -118,7 +112,6 @@ export default function Navbar() {
               boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
             }}
           >
-            {/* NAV MOBILE */}
             <div className="mobile-nav">
               <Link to="/" onClick={() => setOpen(false)} style={linkStyle}>Home</Link>
               <Link to="/dashboard" onClick={() => setOpen(false)} style={linkStyle}>Dashboard</Link>
@@ -153,7 +146,7 @@ export default function Navbar() {
                 </Link>
 
                 <button
-                  onClick={handleLogout} // 🔥 AQUI
+                  onClick={handleLogout}
                   style={{ width: "100%", marginTop: "10px" }}
                 >
                   Logout
@@ -163,7 +156,6 @@ export default function Navbar() {
 
             <hr />
 
-            {/* 🌙 TOGGLE */}
             <button onClick={toggleDark} style={{ width: "100%" }}>
               {dark ? "Modo Claro" : "Modo Escuro"}
             </button>
