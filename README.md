@@ -67,9 +67,12 @@ O projeto está disponível em:
 
 ## 📁 Estrutura do Projeto
 
-src/ ├── components/ \# Componentes reutilizáveis ├── pages/ \# Páginas
-da aplicação ├── services/ \# Integração com APIs ├── hooks/ \# Lógica
-reutilizável (ex: autenticação) └── routes/ \# Rotas de navegação
+src/ 
+├── components/ \# Componentes reutilizáveis 
+├── pages/ \# Páginas da aplicação 
+├── services/ \# Integração com APIs 
+├── hooks/ \# Lógica reutilizável (ex: autenticação) 
+└── routes/ \# Rotas de navegação
 
 ------------------------------------------------------------------------
 
